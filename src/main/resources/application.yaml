@@ -1,0 +1,26 @@
+#server:
+ # port: 8081
+
+spring:
+  profiles:
+    active: local
+    include: secret-key
+  datasource:
+    #hikari: //추가 공부 필요
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1541
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+  jpa:
+    show-sql: true
+    open-in-view: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        dialect: org.hibernate.dialect.MySQLDialect
+        order_updates: true
+        order_inserts: true
+        generate_statistics: false
+        format_sql: true
+    hibernate:
+      ddl-auto: none
