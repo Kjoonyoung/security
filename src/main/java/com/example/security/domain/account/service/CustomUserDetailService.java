@@ -1,7 +1,7 @@
 package com.example.security.domain.account.service;
 
-import com.example.security.domain.account.entity.User;
-import com.example.security.domain.account.repository.UserRepository;
+import com.example.security.domain.account.entity.Account;
+import com.example.security.domain.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+    public Account loadUserByUsername(String email) throws UsernameNotFoundException {
+        return accountRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 계정입니다."));
     }
 }

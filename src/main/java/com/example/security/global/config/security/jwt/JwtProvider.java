@@ -1,6 +1,6 @@
 package com.example.security.global.config.security.jwt;
 
-import com.example.security.domain.account.entity.User;
+import com.example.security.domain.account.entity.Account;
 import com.example.security.domain.account.service.CustomUserDetailService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -54,7 +54,7 @@ public class JwtProvider {
     // 권한정보 획득
     // Spring Security 인증과정에서 권한확인을 위한 기능
     public Authentication getAuthentication(String token) {
-        User account = userDetailsService.loadUserByUsername(this.getPhoneNumber(token));
+        Account account = userDetailsService.loadUserByUsername(this.getPhoneNumber(token));
         return new UsernamePasswordAuthenticationToken(account, "", account.getAuthorities());
     }
 
