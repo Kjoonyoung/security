@@ -23,6 +23,7 @@ public class AccountController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<SignInResponse> signIn(@RequestBody @Valid SignInRequest request) {
+        System.out.println(request.toString());
         return ResponseEntity.ok(accountService.signIn(request));
     }
 
