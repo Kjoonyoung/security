@@ -1,7 +1,9 @@
 package com.example.security.domain.notice;
 
+import com.example.security.domain.notice.dto.CreateNotice;
 import com.example.security.domain.notice.dto.NoticeDetailResponse;
 import com.example.security.domain.notice.dto.NoticeListResponse;
+import com.example.security.domain.notice.dto.UpdateNotice;
 import com.example.security.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,22 +23,23 @@ public class NoticeController {
     }
 
     @PostMapping("/management")
-    public ResponseEntity<Long> createNotice(@RequestBody NoticeDetailResponse response) {
-        return ResponseEntity.ok(noticeService.createNotice(response));
+    public ResponseEntity<Long> createNotice(@RequestBody CreateNotice request) {
+        return ResponseEntity.ok(noticeService.createNotice(request));
     }
 
     @GetMapping("/management/content/{id}")
-    public ResponseEntity<NoticeDetailResponse> contentNotice(@PathVariable Long id) {
-        return ResponseEntity.ok(noticeService.contentNotice(id));
+    public ResponseEntity<NoticeDetailResponse> contentNotice(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(noticeService.getNoticeDetail(id));
     }
 
     @PutMapping("/management/update/{id}")
-    public ResponseEntity<Long> updateNotice(@PathVariable Long id, @RequestBody NoticeDetailResponse response) {
-        return ResponseEntity.ok(noticeService.updateNotice(id, response));
+    public ResponseEntity<Long> updateNotice(@PathVariable("id") Long id, @RequestBody UpdateNotice request) {
+        return ResponseEntity.ok(noticeService.updateNotice(id, request));
     }
 
     @DeleteMapping("/management/delete/{id}")
-    public ResponseEntity<Long> deleteNotice(@PathVariable Long id) {
-        return ResponseEntity.ok(noticeService.deleteNotice(id));
+    public ResponseEntity<Boolean> deleteNotice(@PathVariable("id") Long id) {
+        noticeService.deleteNotice(id);
+        return ResponseEntity.ok().build(); // 실행 했을때 에러가 없으면 무조건 ok
     }
 }
