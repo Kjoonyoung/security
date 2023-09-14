@@ -1,18 +1,20 @@
 package com.example.security.domain.notice.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NoticeDetailResponse {
     private Long id;
 
-    private  String writerName;
+    private String writerName;
 
     private String updaterName;
 

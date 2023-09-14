@@ -43,20 +43,20 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeHttpRequests(authorize ->
-                                authorize
-                                        .requestMatchers(
-                                                "/api/user/check",
-                                                "/api/notice/content/{id}"
-                                        ).hasRole("USER")
-                                        .requestMatchers(
-                                                "/api/notice/management/**"
-                                        ).hasRole("ADMIN")
-                                        .requestMatchers(
-                                                "/api/user/sign-in",
-                                                "/api/user/sign-up",
-                                                "/api/notice"
-                                        ).permitAll()
-                                        .anyRequest().hasRole("USER")
+                        authorize
+                                .requestMatchers(
+                                        "/api/user/check",
+                                        "/api/notice/content/{id}"
+                                ).hasRole("USER")
+                                .requestMatchers(
+                                        "/api/notice/management/**"
+                                ).hasRole("ADMIN")
+                                .requestMatchers(
+                                        "/api/user/sign-in",
+                                        "/api/user/sign-up",
+                                        "/api/notice"
+                                ).permitAll()
+                                .anyRequest().hasRole("USER")
                 )
                 .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
