@@ -21,7 +21,22 @@ public class NoticeController {
     }
 
     @PostMapping("/management")
-    public ResponseEntity<Long> createNotice(@RequestBody NoticeDetailResponse request) {
-        return ResponseEntity.ok(noticeService.createNotice(request));
+    public ResponseEntity<Long> createNotice(@RequestBody NoticeDetailResponse response) {
+        return ResponseEntity.ok(noticeService.createNotice(response));
+    }
+
+    @GetMapping("/management/content/{id}")
+    public ResponseEntity<NoticeDetailResponse> contentNotice(@PathVariable Long id) {
+        return ResponseEntity.ok(noticeService.contentNotice(id));
+    }
+
+    @PutMapping("/management/update/{id}")
+    public ResponseEntity<Long> updateNotice(@PathVariable Long id, @RequestBody NoticeDetailResponse response) {
+        return ResponseEntity.ok(noticeService.updateNotice(id, response));
+    }
+
+    @DeleteMapping("/management/delete/{id}")
+    public ResponseEntity<Long> deleteNotice(@PathVariable Long id) {
+        return ResponseEntity.ok(noticeService.deleteNotice(id));
     }
 }

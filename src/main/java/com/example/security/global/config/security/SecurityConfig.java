@@ -45,13 +45,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                                 authorize
                                         .requestMatchers(
-                                                "/api/user/check"
+                                                "/api/user/check",
+                                                "/api/notice/content/{id}"
                                         ).hasRole("USER")
+                                        .requestMatchers(
+                                                "/api/notice/management/**"
+                                        ).hasRole("ADMIN")
                                         .requestMatchers(
                                                 "/api/user/sign-in",
                                                 "/api/user/sign-up",
-                                                "/api/notice",
-                                                "/api/notice/{id}"
+                                                "/api/notice"
                                         ).permitAll()
                                         .anyRequest().hasRole("USER")
                 )
