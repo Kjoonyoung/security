@@ -54,16 +54,21 @@ public class NoticeService {
     public NoticeDetailResponse getNoticeDetail(Long id) {
         Notice entity = getNotice(id);
 
+        // 업데이트자 이름과 수정된 날짜가 null인 경우 "x"로 설정
+        String updaterName = entity.getModifiedBy() != null ? entity.getModifiedBy().getName() : "x";
+        LocalDateTime modifiedDate = entity.getModifiedDate() != null ? entity.getModifiedDate() : entity.getCreatedDate();
+
         return NoticeDetailResponse.builder()
                 .id(entity.getId())
                 .writerName(entity.getCreatedBy().getName())
-                .updaterName(entity.getModifiedBy().getName())
+                .updaterName(updaterName)
                 .createdDate(entity.getCreatedDate())
-                .modifiedDate(entity.getModifiedDate())
+                .modifiedDate(modifiedDate)
                 .subject(entity.getSubject())
                 .content(entity.getContent())
                 .build();
     }
+
 
     @Transactional
     public Long updateNotice(Long id, UpdateNotice request) {
