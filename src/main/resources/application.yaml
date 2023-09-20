@@ -10,7 +10,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: admin
       password: qwer1234!!
-      jdbc-url: jdbc:mysql://study.c5djo4cjoi4o.ap-northeast-2.rds.amazonaws.com/study?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      jdbc-url: jdbc:mysql:/localhost:8080/blog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
   jpa:
     show-sql: true
     open-in-view: true
