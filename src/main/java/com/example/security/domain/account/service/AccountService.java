@@ -27,19 +27,13 @@ public class AccountService {
         // 단방향 암호화
         String password = passwordEncoder.encode(request.getPassword());
 
-        Account account = Account.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(password)
-                .roles("ROLE_USER")
-                .build();
+        Account account = Account.builder().name(request.getName()).email(request.getEmail()).password(password).roles("ROLE_USER").build();
         accountRepository.save(account);
     }
 
     @Transactional(readOnly = true)
     public SignInResponse signIn(SignInRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("이메일/비밀번호가 맞지않습니다."));
+        Account account = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("이메일/비밀번호가 맞지않습니다."));
         String encPassword = account.getPassword();
         boolean matches = passwordEncoder.matches(request.getPassword(), encPassword);
         if (!matches) {
@@ -50,14 +44,7 @@ public class AccountService {
 
         List<String> roles = Arrays.stream(account.getRoles().split(",")).toList();
 
-        return SignInResponse.builder()
-                .token(token)
-                .id(account.getId())
-                .name(account.getName())
-                .email(account.getEmail())
-                .roles(roles)
-                .build();
+        return SignInResponse.builder().token(token).id(account.getId()).name(account.getName()).email(account.getEmail()).roles(roles).build();
 
     }
-
 }

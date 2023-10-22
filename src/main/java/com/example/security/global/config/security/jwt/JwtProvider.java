@@ -25,13 +25,10 @@ import java.util.Date;
 public class JwtProvider {
 
     private final JwtEnvironment jwtEnvironment;
-
-    private Key secretKey;
-
     // 만료시간 : 1Hour
     private final long exp = 1000L * 60 * 60;
-
     private final CustomUserDetailService userDetailsService;
+    private Key secretKey;
 
     @PostConstruct
     protected void init() {
@@ -43,12 +40,9 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", authorities);
         Date now = new Date();
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
+        return Jwts.builder().setClaims(claims).setIssuedAt(now)
 //                .setExpiration(new Date(now.getTime() + exp))
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
+                .signWith(secretKey, SignatureAlgorithm.HS256).compact();
     }
 
     // 권한정보 획득

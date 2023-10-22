@@ -24,16 +24,7 @@ public class NoticeService {
     public List<NoticeListResponse> searchList() {
         List<Notice> list = noticeRepository.findAll();
 
-        return list.stream()
-                .map(notice -> NoticeListResponse.builder()
-                        .id(notice.getId())
-                        .writerName(notice.getCreatedBy().getName())
-                        .createdDate(notice.getCreatedDate())
-                        .subject(notice.getSubject())
-                        .content(notice.getContent())
-                        .build()
-                )
-                .toList();
+        return list.stream().map(notice -> NoticeListResponse.builder().id(notice.getId()).writerName(notice.getCreatedBy().getName()).createdDate(notice.getCreatedDate()).subject(notice.getSubject()).content(notice.getContent()).build()).toList();
     }
 
     @Transactional
@@ -42,11 +33,7 @@ public class NoticeService {
         Account account = SecurityHelper.getAccount();
         Notice entity = Notice.builder()
                 // 변경할 컬럼만 사용자가 보낼 수 있어야 함. ex) 제목, 내용
-                .createdBy(account)
-                .createdDate(LocalDateTime.now())
-                .subject(request.getSubject())
-                .content(request.getContent())
-                .build();
+                .createdBy(account).createdDate(LocalDateTime.now()).subject(request.getSubject()).content(request.getContent()).build();
         return noticeRepository.save(entity).getId();
     }
 
@@ -58,15 +45,7 @@ public class NoticeService {
         String updaterName = entity.getModifiedBy() != null ? entity.getModifiedBy().getName() : "x";
         LocalDateTime modifiedDate = entity.getModifiedDate() != null ? entity.getModifiedDate() : entity.getCreatedDate();
 
-        return NoticeDetailResponse.builder()
-                .id(entity.getId())
-                .writerName(entity.getCreatedBy().getName())
-                .updaterName(updaterName)
-                .createdDate(entity.getCreatedDate())
-                .modifiedDate(modifiedDate)
-                .subject(entity.getSubject())
-                .content(entity.getContent())
-                .build();
+        return NoticeDetailResponse.builder().id(entity.getId()).writerName(entity.getCreatedBy().getName()).updaterName(updaterName).createdDate(entity.getCreatedDate()).modifiedDate(modifiedDate).subject(entity.getSubject()).content(entity.getContent()).build();
     }
 
 
@@ -82,11 +61,14 @@ public class NoticeService {
 
     @Transactional
     public void deleteNotice(Long id) {
-        noticeRepository.deleteById(id);
+        Account account = SecurityHelper.getAccount();
+        if (account.getRoles().equals("ROLE_ADMIN")) {
+            noticeRepository.deleteById(id);
+        }
+        throw new IllegalArgumentException("권한 없음");
     }
 
     private Notice getNotice(Long id) {
-        return noticeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 데이터입니다."));
+        return noticeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 데이터입니다."));
     }
 }

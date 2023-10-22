@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS `study`.notice;
-CREATE TABLE `blog`.notice
+CREATE TABLE `study`.notice
 (
     id            BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
     created_by    BIGINT       NOT NULL COMMENT '작성자',
