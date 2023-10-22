@@ -17,5 +17,4 @@ public class SignInResponse {
     private String name;
     private String email;
     private List<String> roles;
-
 }

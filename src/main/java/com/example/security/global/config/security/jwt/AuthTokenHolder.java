@@ -1,8 +1,4 @@
 package com.example.security.global.config.security.jwt;
 
-public record AuthTokenHolder(
-        String header,
-        String scheme,
-        String token
-) {
+public record AuthTokenHolder(String header, String scheme, String token) {
 }

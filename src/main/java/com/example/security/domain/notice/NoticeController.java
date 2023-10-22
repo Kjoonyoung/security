@@ -37,9 +37,10 @@ public class NoticeController {
         return ResponseEntity.ok(noticeService.updateNotice(id, request));
     }
 
+    // 공지사항 삭제
     @DeleteMapping("/management/delete/{id}")
     public ResponseEntity<Boolean> deleteNotice(@PathVariable("id") Long id) {
         noticeService.deleteNotice(id);
-        return ResponseEntity.ok().build(); // 실행 했을때 에러가 없으면 무조건 ok
+        return ResponseEntity.ok().build(); // 실행 했을때 에러가 없으면 ok
     }
 }

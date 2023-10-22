@@ -17,6 +17,7 @@ import org.springframework.web.util.WebUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
@@ -44,10 +45,7 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
             case "/api/user/sign-out" -> log.debug("로그아웃");
             default -> {
                 var authTokenHolder = getTokenForRequest(request);
-                log.debug("Authorization Cookie : {}",
-                        ObjectUtils.isEmpty(WebUtils.getCookie(request, jwtEnvironment.AUTH_KEY_NAME)) ?
-                                null :
-                                WebUtils.getCookie(request, jwtEnvironment.AUTH_KEY_NAME).getValue());
+                log.debug("Authorization Cookie : {}", ObjectUtils.isEmpty(WebUtils.getCookie(request, jwtEnvironment.AUTH_KEY_NAME)) ? null : WebUtils.getCookie(request, jwtEnvironment.AUTH_KEY_NAME).getValue());
 
                 if (authTokenHolder != null) {
                     Authentication authentication = null;
@@ -80,13 +78,10 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
         }
 
     }
+
     private AuthTokenHolder getAuthTokenHolder(String token) throws UnsupportedEncodingException {
-        var keyDecoded = URLDecoder.decode(token, "UTF-8");
+        var keyDecoded = URLDecoder.decode(token, StandardCharsets.UTF_8);
         var schemeAndToken = keyDecoded.split(" ");
-        return new AuthTokenHolder(
-                jwtEnvironment.AUTH_KEY_NAME,
-                schemeAndToken[0],
-                schemeAndToken[1]
-        );
+        return new AuthTokenHolder(jwtEnvironment.AUTH_KEY_NAME, schemeAndToken[0], schemeAndToken[1]);
     }
 }

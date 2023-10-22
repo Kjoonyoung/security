@@ -21,24 +21,17 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String email;
-
     private String password;
-
     private String roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(this.roles.split(","))
-                .map(SimpleGrantedAuthority::new)
-                .toList();
+        return Arrays.stream(this.roles.split(",")).map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
