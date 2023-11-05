@@ -62,10 +62,12 @@ public class NoticeService {
     @Transactional
     public void deleteNotice(Long id) {
         Account account = SecurityHelper.getAccount();
+        System.out.println(account.getEmail());
         if (account.getRoles().equals("ROLE_ADMIN")) {
             noticeRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("권한 없음");
         }
-        throw new IllegalArgumentException("권한 없음");
     }
 
     private Notice getNotice(Long id) {

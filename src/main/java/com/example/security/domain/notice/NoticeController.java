@@ -22,12 +22,12 @@ public class NoticeController {
         return ResponseEntity.ok(noticeService.searchList());
     }
 
-    @PostMapping("/management")
+    @PostMapping("/management/create")
     public ResponseEntity<Long> createNotice(@RequestBody CreateNotice request) {
         return ResponseEntity.ok(noticeService.createNotice(request));
     }
 
-    @GetMapping("/management/content/{id}")
+    @GetMapping("/content/{id}")
     public ResponseEntity<NoticeDetailResponse> contentNotice(@PathVariable("id") Long id) {
         return ResponseEntity.ok(noticeService.getNoticeDetail(id));
     }
